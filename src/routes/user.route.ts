@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { usersController } from "../controllers";
+import { userController } from "../controllers";
 import middlewares from "../middlewares";
 import { userCreateSchema, userUpdateSchema } from "../schemas";
 
@@ -9,13 +9,13 @@ usersRoute.post(
   "",
   middlewares.validateBody(userCreateSchema),
   middlewares.uniqueEmail,
-  usersController.create
+  userController.create
 );
 usersRoute.get(
   "",
   middlewares.verifyToken,
   middlewares.isAdmin,
-  usersController.read
+  userController.read
 );
 usersRoute.patch(
   "/:userId",
@@ -23,14 +23,14 @@ usersRoute.patch(
   middlewares.verifyToken,
   middlewares.validateBody(userUpdateSchema),
   middlewares.isAdminOrOwner,
-  usersController.update
+  userController.update
 );
 usersRoute.delete(
   "/:userId",
   middlewares.userIdExists,
   middlewares.verifyToken,
   middlewares.isAdmin,
-  usersController.destroy
+  userController.destroy
 );
 
 export default usersRoute;

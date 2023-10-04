@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { usersRepository } from "../repositories";
+import { userRepository } from "../repositories";
 import { AppError } from "../errors";
 import { User } from "../entities";
 
@@ -10,7 +10,7 @@ export const uniqueEmail = async (
 ): Promise<void> => {
   const email: string = req.body.email
 
-  const foundEmail: User | null = await usersRepository.findOneBy({ email });
+  const foundEmail: User | null = await userRepository.findOneBy({ email });
   if (foundEmail) throw new AppError("Email already exists", 409);
 
   return next();

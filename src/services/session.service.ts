@@ -18,7 +18,7 @@ const create = async ({
   if (!matchPassword) throw new AppError("Invalid credentials", 401);
 
   const token: string = sign(
-    { admin: foundUser.admin },
+    { type: foundUser.type },
     process.env.SECRET_KEY!,
     { subject: foundUser.id.toString(), expiresIn: process.env.EXPIRES_IN! }
   );

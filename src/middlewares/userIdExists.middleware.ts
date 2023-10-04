@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../entities";
-import { usersRepository } from "../repositories";
+import { userRepository } from "../repositories";
 import { AppError } from "../errors";
 
 export const userIdExists = async (
@@ -10,7 +10,7 @@ export const userIdExists = async (
 ): Promise<void> => {
   const id: number = Number(req.params.userId);
 
-  const foundUser: User | null = await usersRepository.findOneBy({ id });
+  const foundUser: User | null = await userRepository.findOneBy({ id });
   if (!foundUser) throw new AppError("User not found", 404);
 
   res.locals = { ...res.locals, foundUser };
