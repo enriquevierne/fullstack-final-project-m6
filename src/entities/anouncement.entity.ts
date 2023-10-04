@@ -3,17 +3,21 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { User, Comment, Image } from ".";
+
 
 export enum FuelType {
   GAS = "gas",
   ETANOL = "etanol",
 }
 
-@Entity("anoucements")
-class Anoucement {
+@Entity("anouncements")
+class Anouncement {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -52,6 +56,15 @@ class Anoucement {
 
   @DeleteDateColumn({ type: "date" })
   deletedAt: string | null;
+
+  @OneToMany(() => Image, (i) => i.anouncement)
+  images: Array<Image>;
+  
+  @OneToMany(() => Comment, (c) => c.anouncement)
+  comments: Array<Comment>;
+
+  @ManyToOne(() => User, (u) => u.anouncements)
+  user: User | null;
 }
 
-export { Anoucement };
+export { Anouncement };

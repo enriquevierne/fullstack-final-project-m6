@@ -3,9 +3,11 @@ import {
     CreateDateColumn,
     DeleteDateColumn,
     Entity,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
   } from "typeorm";
+import { Anouncement, User } from ".";
   
   @Entity("comments")
   class Comment {
@@ -23,6 +25,12 @@ import {
   
     @DeleteDateColumn({ type: "date" })
     deletedAt: string | null;
+
+    @ManyToOne(() => User, (u) => u.comments)
+    user: User | null;
+
+    @ManyToOne(() => Anouncement, (a) => a.comments)
+    anouncement: Anouncement;    
   
   }
   
