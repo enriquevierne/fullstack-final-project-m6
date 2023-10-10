@@ -2,8 +2,7 @@ import "reflect-metadata";
 import "express-async-errors";
 import express, { Application } from "express";
 import middlewares from "./middlewares";
-import { sessionRoute, userRoute } from "./routes";
-import anouncementRoute from "./routes/anouncement.route";
+import { anouncementRoute, commentRoute, sessionRoute, userRoute } from "./routes";
 
 const app: Application = express();
 app.use(express.json());

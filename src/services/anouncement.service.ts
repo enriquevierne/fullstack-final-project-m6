@@ -42,11 +42,11 @@ const retrieve = async (anouncementId: number): Promise<any> => {
   return user;
 };
 
-const update = async (user: any, payload: any): Promise<any> => {
-  const anouncement: any = anouncementRepository.create({ ...user, ...payload });
-  await anouncementRepository.save(anouncement);
+const update = async (anouncement: any, payload: any): Promise<any> => {
+  const anouncementUpdated: any = anouncementRepository.create({ ...anouncement, ...payload });
+  await anouncementRepository.save(anouncementUpdated);
 
-  return anouncement
+  return anouncementUpdated
 };
 
 const destroy = async (user: any): Promise<void> => {

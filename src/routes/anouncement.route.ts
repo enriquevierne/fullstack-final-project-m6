@@ -1,6 +1,6 @@
 import { Router } from "express";
 import middlewares from "../middlewares";
-import { anouncementController } from "../controllers";
+import { anouncementController, commentController } from "../controllers";
 
 const anouncementRoute: Router = Router();
 
@@ -26,6 +26,15 @@ anouncementRoute.delete(
   middlewares.verifyToken,
   middlewares.isOwner,
   anouncementController.destroy
+);
+anouncementRoute.post(
+  "/:anouncementId/comments",
+  middlewares.verifyToken,
+  commentController.create
+);
+anouncementRoute.get(
+  "/:anouncementId/comments",
+  commentController.read
 );
 
 export default anouncementRoute;
