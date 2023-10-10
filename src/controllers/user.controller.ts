@@ -3,13 +3,11 @@ import { userService } from "../services";
 import { UserRead, UserReturn, UserUpdate } from "../interfaces";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
+  console.log("🚀 ~ file: user.controller.ts:6 ~ create ~ req.body:", req.body)
   const user: UserReturn = await userService.create(req.body);
+  console.log("🚀 ~ file: user.controller.ts:8 ~ create ~ user:", user)
+  
   return res.status(201).json(user);
-};
-
-const read = async (req: Request, res: Response): Promise<Response> => {
-  const user: UserRead = await userService.read();
-  return res.status(200).json(user);
 };
 
 const update = async (req: Request, res: Response): Promise<Response> => {
@@ -25,4 +23,4 @@ const destroy = async (req: Request, res: Response): Promise<Response> => {
   return res.status(204).json();
 };
 
-export default { create, read, update, destroy };
+export default { create, update, destroy };

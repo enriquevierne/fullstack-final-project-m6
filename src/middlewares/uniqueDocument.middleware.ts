@@ -3,17 +3,15 @@ import { userRepository } from "../repositories";
 import { AppError } from "../errors";
 import { User } from "../entities";
 
-export const uniqueEmail = async (
+export const uniqueDocument = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log("uniqueEmail: ",req.body);
-  
-  const email: string = req.body.email
+  const document: string = req.body.document
 
-  const foundEmail: User | null = await userRepository.findOneBy({ email });
-  if (foundEmail) throw new AppError("Email already exists", 409);
+  const foundDocument: User | null = await userRepository.findOneBy({ document });
+  if (foundDocument) throw new AppError("Document already exists", 409);
 
   return next();
 };

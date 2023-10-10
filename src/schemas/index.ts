@@ -1,7 +1,6 @@
 import { sessionSchema } from "./session.schema";
 import {
   userCreateSchema,
-  userReadSchema,
   userReturnSchema,
   userSchema,
   userUpdateSchema,
@@ -14,7 +13,6 @@ export {
   addressSchema,
   sessionSchema,
   userCreateSchema,
-  userReadSchema,
   userReturnSchema,
   userSchema,
   userUpdateSchema,

@@ -1,6 +1,5 @@
 import { z } from "zod";
-import { addressSchema } from ".";
-
+import { addressCreateSchema, addressSchema } from ".";
 
 const userSchema = z.object({
   id: z.number(),
@@ -15,25 +14,20 @@ const userSchema = z.object({
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
   deletedAt: z.string().or(z.date()).nullable(),
-  address: addressSchema
+  address: addressSchema,
 });
 
-const userCreateSchema = userSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  deletedAt: true,
-  address: true,
-});
+const userCreateSchema = userSchema
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    deletedAt: true,
+    address: true,
+  })
+  .extend({ address: addressCreateSchema });
 
 const userReturnSchema = userSchema.omit({ password: true });
-const userReadSchema = userReturnSchema.array();
-const userUpdateSchema = userCreateSchema.omit({ type: true }).partial();
+const userUpdateSchema = userCreateSchema.omit({ type: true }).deepPartial();
 
-export {
-  userCreateSchema,
-  userReadSchema,
-  userReturnSchema,
-  userSchema,
-  userUpdateSchema,
-};
+export { userCreateSchema, userReturnSchema, userSchema, userUpdateSchema };

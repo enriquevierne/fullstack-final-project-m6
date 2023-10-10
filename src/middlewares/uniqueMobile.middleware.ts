@@ -3,17 +3,15 @@ import { userRepository } from "../repositories";
 import { AppError } from "../errors";
 import { User } from "../entities";
 
-export const uniqueEmail = async (
+export const uniqueMobile = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log("uniqueEmail: ",req.body);
-  
-  const email: string = req.body.email
+  const mobile: string = req.body.mobile
 
-  const foundEmail: User | null = await userRepository.findOneBy({ email });
-  if (foundEmail) throw new AppError("Email already exists", 409);
+  const foundMobile: User | null = await userRepository.findOneBy({ mobile });
+  if (foundMobile) throw new AppError("Mobile already exists", 409);
 
   return next();
 };

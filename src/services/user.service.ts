@@ -1,28 +1,31 @@
 import { User } from "../entities";
-import { UserCreate, UserRead, UserReturn, UserUpdate } from "../interfaces";
-import { userRepository } from "../repositories";
-import { userReadSchema, userReturnSchema } from "../schemas";
+import { UserCreate, UserReturn, UserUpdate } from "../interfaces";
+import { userRepository, addressRepository } from "../repositories";
+import { userReturnSchema } from "../schemas";
 
-const create = async (payload: UserCreate): Promise<UserReturn> => {
-  const user: User = userRepository.create(payload);
+const create = async (payload: UserCreate): Promise<any> => {
+  const { address, ...body } = payload;
+  const foundAddress = addressRepository.create(address);
+  await addressRepository.save(foundAddress);
+
+  const user: User = userRepository.create({
+    ...body,
+    address: foundAddress,
+  });
   await userRepository.save(user);
 
-  return userReturnSchema.parse(user);
-};
-
-const read = async (): Promise<UserRead> => {
-  return userReadSchema.parse(await userRepository.find());
+  return user
 };
 
 const update = async (user: User, payload: UserUpdate): Promise<UserReturn> => {
-  const userUpdated: User = userRepository.create({...user, ...payload});
+  const userUpdated: User = userRepository.create({ ...user, ...payload });
   await userRepository.save(userUpdated);
 
-  return userReturnSchema.parse(userUpdated)
+  return userReturnSchema.parse(userUpdated);
 };
 
 const destroy = async (user: User): Promise<void> => {
   await userRepository.softRemove(user);
 };
 
-export default { create, read, update, destroy };
+export default { create, update, destroy };

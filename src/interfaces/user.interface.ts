@@ -3,7 +3,6 @@ import {
   userCreateSchema,
   userReturnSchema,
   userSchema,
-  userUpdateSchema,
 } from "../schemas";
 import { DeepPartial, Repository } from "typeorm";
 

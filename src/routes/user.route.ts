@@ -7,15 +7,10 @@ const usersRoute: Router = Router();
 
 usersRoute.post(
   "",
-  middlewares.validateBody(userCreateSchema),
   middlewares.uniqueEmail,
+  middlewares.uniqueDocument,
+  middlewares.uniqueMobile,
   userController.create
-);
-usersRoute.get(
-  "",
-  middlewares.verifyToken,
-  middlewares.isAdmin,
-  userController.read
 );
 usersRoute.patch(
   "/:userId",
