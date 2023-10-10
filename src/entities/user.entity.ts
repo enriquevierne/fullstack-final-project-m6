@@ -35,7 +35,7 @@ class User {
   @Column({ length: 12, unique: true })
   mobile: string;
 
-  @Column({ type: "date" })
+  @Column({ length: 10 })
   birthdate: string;
 
   @Column({ type: "text" })

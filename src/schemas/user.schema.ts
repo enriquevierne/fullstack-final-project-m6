@@ -10,7 +10,7 @@ const userSchema = z.object({
   document: z.string().max(11),
   mobile: z.string().max(12),
   type: z.boolean().default(false),
-  birthdate: z.string().or(z.date()),
+  birthdate: z.string().max(10),
   bio: z.string().max(100),
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
