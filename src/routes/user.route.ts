@@ -7,6 +7,7 @@ const usersRoute: Router = Router();
 
 usersRoute.post(
   "",
+  middlewares.validateBody(userCreateSchema),
   middlewares.uniqueEmail,
   middlewares.uniqueDocument,
   middlewares.uniqueMobile,
@@ -16,15 +17,14 @@ usersRoute.patch(
   "/:userId",
   middlewares.userIdExists,
   middlewares.verifyToken,
-  middlewares.validateBody(userUpdateSchema),
-  middlewares.isAdminOrOwner,
+  middlewares.isSellerOrOwner,
   userController.update
 );
 usersRoute.delete(
   "/:userId",
   middlewares.userIdExists,
   middlewares.verifyToken,
-  middlewares.isAdmin,
+  middlewares.isSeller,
   userController.destroy
 );
 

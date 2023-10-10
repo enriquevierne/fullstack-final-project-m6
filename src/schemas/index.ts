@@ -5,7 +5,17 @@ import {
   userSchema,
   userUpdateSchema,
 } from "./user.schema";
-import { addressSchema, addressCreateSchema, addressReadSchema } from "./address.schema";
+import {
+  addressSchema,
+  addressCreateSchema,
+  addressReadSchema,
+} from "./address.schema";
+import {
+  anouncementSchema,
+  anouncementCreateSchema,
+  anouncementReadSchema,
+  anouncementUpdateSchema,
+} from "./anouncement.schema";
 
 export {
   addressCreateSchema,
@@ -16,4 +26,8 @@ export {
   userReturnSchema,
   userSchema,
   userUpdateSchema,
+  anouncementCreateSchema,
+  anouncementReadSchema,
+  anouncementSchema,
+  anouncementUpdateSchema,
 };

@@ -3,12 +3,14 @@ import "express-async-errors";
 import express, { Application } from "express";
 import middlewares from "./middlewares";
 import { sessionRoute, userRoute } from "./routes";
+import anouncementRoute from "./routes/anouncement.route";
 
 const app: Application = express();
 app.use(express.json());
 
 app.use("/api/login", sessionRoute)
 app.use("/api/users", userRoute)
+app.use("/api/anouncements", anouncementRoute)
 
 app.use("/api", middlewares.handleError);
 

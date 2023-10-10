@@ -16,6 +16,7 @@ export const verifyToken = (
     ...res.locals,
     decoded: verify(token, process.env.SECRET_KEY!),
   };
+  console.log("🚀 ~ file: verifyToken.middleware.ts:16 ~ res.locals:", res.locals)
  
   return next();
 };

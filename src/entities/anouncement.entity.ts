@@ -64,7 +64,7 @@ class Anouncement {
   comments: Array<Comment>;
 
   @ManyToOne(() => User, (u) => u.anouncements)
-  user: User | null;
+  user: User;
 }
 
 export { Anouncement };

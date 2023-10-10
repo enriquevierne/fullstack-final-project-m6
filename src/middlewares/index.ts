@@ -1,16 +1,19 @@
 import { handleError } from "./handleErrors.middleware";
 import { uniqueEmail } from "./uniqueEmail.middleware";
-import { isAdmin } from "./isAdmin.middleware";
-import { isAdminOrOwner } from "./isAdminOrOwner.middleware";
+import { isOwner } from "./isOwner.middleware";
+import { isSeller } from "./isSeller.middleware";
+import { isSellerOrOwner } from "./isSellerOrOwner.middleware";
 import { userIdExists } from "./userIdExists.middleware";
 import { validateBody } from "./validateBody.middleware";
 import { verifyToken } from "./verifyToken.middleware";
 import { uniqueDocument } from "./uniqueDocument.middleware";
 import { uniqueMobile } from "./uniqueMobile.middleware";
+
 export default {
   handleError,
-  isAdmin,
-  isAdminOrOwner,
+  isSeller,
+  isOwner,
+  isSellerOrOwner,
   uniqueEmail,
   uniqueDocument,
   uniqueMobile,
