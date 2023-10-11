@@ -8,8 +8,6 @@ export const uniqueEmail = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  console.log("uniqueEmail: ",req.body);
-  
   const email: string = req.body.email
 
   const foundEmail: User | null = await userRepository.findOneBy({ email });

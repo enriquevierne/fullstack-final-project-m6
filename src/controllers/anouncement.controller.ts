@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { anouncementService } from "../services";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
-  console.log("data", res.locals);
   const { sub } = res.locals.decoded
   req.body.user = sub
   const anouncement = await anouncementService.create(req.body);

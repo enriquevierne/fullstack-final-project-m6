@@ -2,22 +2,19 @@ import { Request, Response } from "express";
 import { commentService } from "../services";
 
 const create = async (req: Request, res: Response): Promise<Response> => {
-  const { anouncementId } = req.params
-  const { sub} = res.locals.decoded
-  req.body.user = Number(sub)
-  req.body.anouncement = Number(anouncementId)
-  console.log(req.body);
-  console.log(req);
-  
-  
+  const { anouncementId } = req.params;
+  const { sub } = res.locals.decoded;
+  req.body.user = Number(sub);
+  req.body.anouncement = Number(anouncementId);
+
   const comment = await commentService.create(req.body);
 
   return res.status(201).json(comment);
 };
 
 const read = async (req: Request, res: Response): Promise<Response> => {
-  const { anouncementId } = req.params;
-  
+  const { anouncementId } = req.params
+
   const comment = await commentService.read(Number(anouncementId));
 
   return res.status(201).json(comment);

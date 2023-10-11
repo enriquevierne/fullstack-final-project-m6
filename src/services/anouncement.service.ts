@@ -1,6 +1,5 @@
 import { AppError } from "../errors";
 import { anouncementRepository, userRepository } from "../repositories";
-import { anouncementReadSchema } from "../schemas";
 
 const create = async (payload: any): Promise<any> => {
   const foundAnouncement = anouncementRepository.create(payload);
@@ -49,8 +48,8 @@ const update = async (anouncement: any, payload: any): Promise<any> => {
   return anouncementUpdated
 };
 
-const destroy = async (user: any): Promise<void> => {
-  await anouncementRepository.softRemove(user);
+const destroy = async (anouncement: any): Promise<void> => {
+  await anouncementRepository.softRemove(anouncement);
 };
 
 export default { create, update, read, retrieve, readByUser, destroy };

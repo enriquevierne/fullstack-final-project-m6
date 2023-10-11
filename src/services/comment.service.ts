@@ -8,12 +8,15 @@ const create = async (payload: any): Promise<any> => {
   return comment;
 };
 
-const read = async (): Promise<any> => {
-  const comment = await commentRepository.find({
-    relations: {
-      user: true,
+const read = async (anouncementId: number): Promise<any> => {
+  const comment = await anouncementRepository.findOne(
+    {
+      relations: {
+        comments: true,
+      },
+      where: { id: anouncementId },
     }
-  });
+  );
   return comment
 };
 
