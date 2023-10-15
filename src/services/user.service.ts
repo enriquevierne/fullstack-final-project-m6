@@ -1,7 +1,6 @@
 import { User } from "../entities";
 import { UserCreate, UserReturn, UserUpdate } from "../interfaces";
 import { userRepository, addressRepository } from "../repositories";
-import { userReturnSchema } from "../schemas";
 
 const create = async (payload: UserCreate): Promise<any> => {
   const { address, ...body } = payload;
@@ -21,7 +20,7 @@ const update = async (user: User, payload: UserUpdate): Promise<UserReturn> => {
   const userUpdated: User = userRepository.create({ ...user, ...payload });
   await userRepository.save(userUpdated);
 
-  return userReturnSchema.parse(userUpdated);
+  return userUpdated
 };
 
 const destroy = async (user: User): Promise<void> => {

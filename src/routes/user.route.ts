@@ -7,7 +7,6 @@ const usersRoute: Router = Router();
 
 usersRoute.post(
   "",
-  middlewares.validateBody(userCreateSchema),
   middlewares.uniqueEmail,
   middlewares.uniqueDocument,
   middlewares.uniqueMobile,

@@ -31,14 +31,14 @@ const retrieve = async (req: Request, res: Response): Promise<Response> => {
 
 const update = async (req: Request, res: Response): Promise<Response> => {
   const anouncement = await anouncementService.update(
-    res.locals.foundUser,
+    res.locals.foundAnouncement,
     req.body
   );
   return res.status(200).json(anouncement);
 };
 
 const destroy = async (req: Request, res: Response): Promise<Response> => {
-  await anouncementService.destroy(res.locals.foundUser);
+  await anouncementService.destroy(res.locals.foundAnouncement);
   return res.status(204).json();
 };
 
