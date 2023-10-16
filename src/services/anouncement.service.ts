@@ -26,6 +26,7 @@ const read = async (): Promise<any> => {
   const anouncement = await anouncementRepository.find({
     relations: {
       user: true,
+      images: true
     },
   });
   return anouncement;
@@ -34,7 +35,7 @@ const read = async (): Promise<any> => {
 const readByUser = async (userId: number): Promise<any> => {
   const anouncementResult = await userRepository.findOne({
     where: { id: userId },
-    relations: { anouncements: { user: true } },
+    relations: { anouncements: { user: true, images: true }}
   });
   if (!anouncementResult) {
     throw new AppError("User not found", 404);
@@ -46,6 +47,7 @@ const retrieve = async (anouncementId: number): Promise<any> => {
   const user = await anouncementRepository.findOne({
     relations: {
       user: true,
+      images: true
     },
     where: { id: anouncementId },
   });
