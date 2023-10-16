@@ -16,6 +16,11 @@ import {
   anouncementReadSchema,
   anouncementUpdateSchema,
 } from "./anouncement.schema";
+import {
+  imageCreateSchema,
+  imageReadSchema,
+  imageSchema,
+} from "./image.schema";
 
 export {
   addressCreateSchema,
@@ -30,4 +35,7 @@ export {
   anouncementReadSchema,
   anouncementSchema,
   anouncementUpdateSchema,
+  imageCreateSchema,
+  imageReadSchema,
+  imageSchema,
 };

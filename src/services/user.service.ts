@@ -6,6 +6,7 @@ const create = async (payload: UserCreate): Promise<any> => {
   const { address, ...body } = payload;
   const foundAddress = addressRepository.create(address);
   await addressRepository.save(foundAddress);
+console.log(foundAddress);
 
   const user: User = userRepository.create({
     ...body,

@@ -16,14 +16,14 @@ usersRoute.patch(
   "/:userId",
   middlewares.userIdExists,
   middlewares.verifyToken,
-  middlewares.isSellerOrOwner,
+  middlewares.isOwner,
   userController.update
 );
 usersRoute.delete(
   "/:userId",
   middlewares.userIdExists,
   middlewares.verifyToken,
-  middlewares.isSeller,
+  middlewares.isOwner,
   userController.destroy
 );
 

@@ -27,8 +27,8 @@ const update = async (comment: any, payload: any): Promise<any> => {
   return commentUpdated;
 };
 
-const destroy = async (user: any): Promise<void> => {
-  await commentRepository.softRemove(user);
+const destroy = async (comment: any): Promise<void> => {
+  await commentRepository.softRemove(comment);
 };
 
 export default { create, update, read, destroy };

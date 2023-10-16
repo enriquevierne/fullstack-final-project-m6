@@ -1,51 +1,66 @@
+import { Anouncement } from "../entities";
 import { AppError } from "../errors";
-import { anouncementRepository, userRepository } from "../repositories";
+import {
+  anouncementRepository,
+  imageRepository,
+  userRepository,
+} from "../repositories";
 
 const create = async (payload: any): Promise<any> => {
-  const foundAnouncement = anouncementRepository.create(payload);
-  const anouncement = await anouncementRepository.save(foundAnouncement);
+  const { images, ...body } = payload;
+  const foundImage = imageRepository.create(images);
+  await imageRepository.save(foundImage);
+console.log(foundImage);
 
-  return anouncement
+  const anouncement = anouncementRepository.create({
+    ...body,
+    images: foundImage,
+  });
+
+  await anouncementRepository.save(anouncement);
+
+  return anouncement;
 };
 
 const read = async (): Promise<any> => {
   const anouncement = await anouncementRepository.find({
     relations: {
       user: true,
-    }
+    },
   });
-  return anouncement
+  return anouncement;
 };
 
 const readByUser = async (userId: number): Promise<any> => {
   const anouncementResult = await userRepository.findOne({
-    where: {id: userId},
-    relations: { anouncements: {user: true}}
+    where: { id: userId },
+    relations: { anouncements: { user: true } },
   });
-  if(!anouncementResult) {
-    throw new AppError("User not found", 404)
+  if (!anouncementResult) {
+    throw new AppError("User not found", 404);
   }
-  return anouncementResult
+  return anouncementResult;
 };
 
 const retrieve = async (anouncementId: number): Promise<any> => {
-  const user = await anouncementRepository.findOne(
-    {
-      relations: {
-        user: true,
-      },
-      where: { id: anouncementId },
-    }
-  );
+  const user = await anouncementRepository.findOne({
+    relations: {
+      user: true,
+    },
+    where: { id: anouncementId },
+  });
 
   return user;
 };
 
 const update = async (anouncement: any, payload: any): Promise<any> => {
-  const anouncementUpdated: any = anouncementRepository.create({ ...anouncement, ...payload });
+  const anouncementUpdated: any = anouncementRepository.create({
+    ...anouncement,
+    ...payload,
+  });
   await anouncementRepository.save(anouncementUpdated);
 
-  return anouncementUpdated
+  return anouncementUpdated;
 };
 
 const destroy = async (anouncement: any): Promise<void> => {

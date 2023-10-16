@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userCreateSchema, userSchema } from ".";
+import { imageCreateSchema, imageSchema, userCreateSchema, userSchema } from ".";
 
 const anouncementSchema = z.object({
   id: z.number(),
@@ -15,6 +15,7 @@ const anouncementSchema = z.object({
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
   userId: userSchema,
+  images: imageSchema
 });
 
 const anouncementCreateSchema = anouncementSchema
@@ -23,8 +24,9 @@ const anouncementCreateSchema = anouncementSchema
     createdAt: true,
     updatedAt: true,
     userId: true,
+    images: true,
   })
-  .extend({ user: userCreateSchema });
+  .extend({ user: userCreateSchema, images: imageCreateSchema });
 
 const anouncementReadSchema = anouncementSchema.array();
 const anouncementUpdateSchema = anouncementCreateSchema.deepPartial();

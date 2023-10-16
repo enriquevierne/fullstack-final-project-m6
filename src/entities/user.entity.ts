@@ -55,7 +55,7 @@ class User {
 
   @OneToOne(() => Address)
   @JoinColumn()
-  address: Address;
+  address: Address; 
 
   @OneToMany(() => Comment, (c) => c.user)
   comments: Array<Comment>;

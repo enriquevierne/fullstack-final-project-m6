@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -58,6 +59,7 @@ class Anouncement {
   deletedAt: string | null;
 
   @OneToMany(() => Image, (i) => i.anouncement)
+  @JoinColumn()
   images: Array<Image>;
   
   @OneToMany(() => Comment, (c) => c.anouncement)
