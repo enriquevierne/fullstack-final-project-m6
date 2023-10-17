@@ -82,6 +82,10 @@ npm run typeorm migration:run -- -d ./src/data-source
 
 
 Todas as rotas são necessárias autenticação, exceto nas rotas de GET.
+| Campo      | Tipo   | Descrição                                       |
+| -----------|--------|-------------------------------------------------|
+| common     | string | token de usuário comprador                      |
+| seller     | string | token de usuário vendedor                       |
 
 ---
 
@@ -364,7 +368,7 @@ O array Images é definido como:
 
 ---
 
-### 1.1. **Criação de Anúncio**
+### 2.1. **Criação de Anúncio**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -434,7 +438,7 @@ nenhum erro pode retornar além das validações.
 
 ---
 
-### 1.2. **Listar Anúncios**
+### 2.2. **Listar Anúncios**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -505,7 +509,7 @@ no máximo retorna uma lista vazia
 
 ---
 
-### 1.3. **lista anúncio por id**
+### 2.3. **lista anúncio por id**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -565,4 +569,155 @@ Vazio
 ```
 
 ### Possíveis Erros:
-no máximo retorna uma lista vazia
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 404 Not Found   | Anouncemnt not found. |
+
+
+
+### 2.4. **lista anúncios de um usuário**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncement/users/:userId`
+
+### Exemplo de Request:
+```
+GET /anouncement/users/1
+Host: http://localhost:3000/api
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+Nenhum
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+{
+	"id": 1,
+	"name": "John Doe",
+	"email": "johns@example.com",
+	"password": "$2a$10$sOUOtCyjEfeiqZq8Cd1Lnu8K.5oyRx7FsDLW0OAoR3.k0kVel7MmO",
+	"document": "2234567890",
+	"mobile": "22123456789",
+	"birthdate": "1990-01-01",
+	"bio": "Lorem ipsum dolor sit amet.",
+	"type": true,
+	"createdAt": "2023-10-09",
+	"updatedAt": "2023-10-09",
+	"deletedAt": null,
+	"anouncements": [
+		{
+			"id": 1,
+			"brand": "Toyota",
+			"car": "Camry",
+			"year": 2020,
+			"fuel": "gas",
+			"kilometers": 15000,
+			"color": "blue",
+			"fipe": "25000.00",
+			"price": "28000.00",
+			"description": "Used car in excellent condition.",
+			"createdAt": "2023-10-16",
+			"updatedAt": "2023-10-16",
+			"deletedAt": null,
+			"images": [
+				{
+					"id": 1,
+					"image_url": "http://example.com/image1.jpg",
+					"is_cover": true
+				}
+			]
+		}
+    ]
+}
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 404 Not Found   | User not found. |
+
+
+### 2.5. **editar anúncio**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncement/:anouncementId`
+
+### Exemplo de Request:
+```
+GET /anouncement/1
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| anouncementId | number      | Identificador único do anúncio |
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+{
+	"id": 1,
+	"name": "John Doe",
+	"email": "johns@example.com",
+	"password": "$2a$10$sOUOtCyjEfeiqZq8Cd1Lnu8K.5oyRx7FsDLW0OAoR3.k0kVel7MmO",
+	"document": "2234567890",
+	"mobile": "22123456789",
+	"birthdate": "1990-01-01",
+	"bio": "Lorem ipsum dolor sit amet.",
+	"type": true,
+	"createdAt": "2023-10-09",
+	"updatedAt": "2023-10-09",
+	"deletedAt": null,
+	"anouncements": [
+		{
+			"id": 1,
+			"brand": "Toyota",
+			"car": "Camry",
+			"year": 2020,
+			"fuel": "gas",
+			"kilometers": 15000,
+			"color": "blue",
+			"fipe": "25000.00",
+			"price": "28000.00",
+			"description": "Used car in excellent condition.",
+			"createdAt": "2023-10-16",
+			"updatedAt": "2023-10-16",
+			"deletedAt": null,
+			"images": [
+				{
+					"id": 1,
+					"image_url": "http://example.com/image1.jpg",
+					"is_cover": true
+				}
+			]
+		}
+    ]
+}
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 404 Not Found   | User not found. |
