@@ -21,14 +21,14 @@ anouncementRoute.patch(
   "/:anouncementId",
   middlewares.AnouncementIdExists,
   middlewares.verifyToken,
-  middlewares.isOwner,
+  middlewares.isOwnerAnouncement,
   anouncementController.update
 );
 anouncementRoute.delete(
   "/:anouncementId",
   middlewares.AnouncementIdExists,
   middlewares.verifyToken,
-  middlewares.isOwner,
+  middlewares.isOwnerAnouncement,
   anouncementController.destroy
 );
 anouncementRoute.post(
@@ -43,7 +43,7 @@ anouncementRoute.patch(
   middlewares.AnouncementIdExists,
   middlewares.CommentIdExists,
   middlewares.verifyToken,
-  middlewares.isOwner,
+  middlewares.isOwnerComment,
   commentController.update
 );
 anouncementRoute.delete(
@@ -51,7 +51,7 @@ anouncementRoute.delete(
   middlewares.AnouncementIdExists,
   middlewares.CommentIdExists,
   middlewares.verifyToken,
-  middlewares.isOwner,
+  middlewares.isOwnerComment,
   commentController.destroy
 );
 
