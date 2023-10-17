@@ -12,21 +12,21 @@ const create = async (req: Request, res: Response): Promise<Response> => {
 const read = async (req: Request, res: Response): Promise<Response> => {
   const anouncement = await anouncementService.read();
 
-  return res.status(201).json(anouncement);
+  return res.status(200).json(anouncement);
 };
 
 const readByUser = async (req: Request, res: Response): Promise<Response> => {
   const { userId } = req.params;
   const anouncement = await anouncementService.readByUser(Number(userId));
 
-  return res.status(201).json(anouncement);
+  return res.status(200).json(anouncement);
 };
 
 const retrieve = async (req: Request, res: Response): Promise<Response> => {
   const { anouncementId } = req.params;
   const anouncement = await anouncementService.retrieve(Number(anouncementId));
 
-  return res.status(201).json(anouncement);
+  return res.status(200).json(anouncement);
 };
 
 const update = async (req: Request, res: Response): Promise<Response> => {

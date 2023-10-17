@@ -81,7 +81,7 @@ npm run typeorm migration:run -- -d ./src/data-source
 [ Voltar para o topo ](#tabela-de-conteúdos)
 
 
-Por enquanto, não foi implementada autenticação.
+Todas as rotas são necessárias autenticação, exceto nas rotas de GET.
 
 ---
 
@@ -318,87 +318,84 @@ Vazio
 | Código do Erro | Descrição |
 |----------------|-----------|
 | 404 Not Found   | User not found. |
+
+
 ## 2. **Anouncements**
 [ Voltar para os Endpoints ](#5-endpoints)
 
 O objeto Anouncement é definido como:
 
-| Campo      | Tipo   | Descrição                                       |
-| -----------|--------|-------------------------------------------------|
-| id         | number | Identificador único do usuário                  |
-| brand       | string | O nome do usuário                               |
-| car      | string | O e-mail do usuário                             |
-| year   | string | A senha de acesso do usuário                    |
-| fuel   | string | O documento do usuário                          |
-| kilometers     | string | O telefone do usuário                           |
-| color       | boolean| Define se um usuário é vendedor ou comprador    |
-| fipe  | string | A data de nascimento do usuário                 |
-| price        | string | A biografia do usuário                          |
-| description  | string | Data de criação do usuário                      |
-| createdAt  | string | Data de atualização do usuário                  |
-| updatedAt  | string | Data de deleção do usuário                      |
-| deletedAt  | string | Data de deleção do usuário                      |
-| address    | objeto | O endereço do usuário.                          |
+| Campo       | Tipo   | Descrição                                        |
+| ------------|--------|--------------------------------------------------|
+| id          | number | Identificador único do anuncio                   |
+| brand       | string | marca do carro                                   |
+| car         | string | O modelo do carro                                |
+| year        | number | O ano do carro                                   |
+| fuel        | string | O combustivel do carro  (FUEL TYPE: gas, etanol) |
+| kilometers  | number | A quilometragem do carro                         |
+| color       | string | A cor do carro                                   |
+| fipe        | number | O preço da fipe do carro                         |
+| price       | number | O preço de venda do carro                        |
+| description | string | A descrição do anunncio                          |
+| createdAt   | string | Data de atualização do carro                     |
+| updatedAt   | string | Data de deleção do carro                         |
+| deletedAt   | string | Data de deleção do carro                         |
+| images      | array | As imagens do carro.                             |
 
-O objeto address é definido como:
+O array Images é definido como:
 
-Campo        | Tipo   | Descrição                                       |
-| -----------|--------|-------------------------------------------------|
-| id         | number | Identificador único do usuário                  |
-| zip        | string | O cep do usuário                                |
-| street     | string | A rua do usuário                                |
-| city       | string | A cidade do usuário                             |
-| state      | string | O estado do usuário                             |
-| number     | string | O número do usuário                             |
-| complement | string | O complemneto do endereço do usuário            |
+| Campo      | Tipo    | Descrição                     |
+| -----------|---------|-------------------------------|
+| id         | number  | Identificador único da imagem |
+| image_url  | string  | O endereço da imagem          |
+| is_cover   | boolean | define se é capa ou não       |
+
     
 ### Endpoints
 
-| Método   | Rota           | Descrição              |
-|----------|----------------|------------------------|
-| POST     | /users         | Criação de um usuário  |
-| PATCH    | /users/:userId | Edição de um usuário   |
-| DELETE   | /users/:userId | Deleção de um usuário  |
-| POST     | /login         | Fazer login            |
+| Método  | Rota           | Descrição              |
+|---------|----------------|------------------------|
+| POST    | /anouncements         | Criação de um usuário  |
+| GET     | /anouncements         | listar anúncios  |
+| GET     | /anouncements/:anouncementId | listar anúncio por id  |
+| GET     | /anouncements/users/:userId | listar anúncios de um usuário por id  |
+| PATCH   | /anouncements/:anouncementId | Edição de um anúncio   |
+| DELETE  | /anouncements/:anouncementId | Deleção de um anúncio  |
 
 ---
 
-### 1.1. **Criação de Usuário**
+### 1.1. **Criação de Anúncio**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
-### `/users`
+### `/anouncements`
 
 ### Exemplo de Request:
 ```
-POST /users
+POST /anouncements
 Host: http://localhost:3000/api
-Authorization: None
+Authorization: Bearer Token
 Content-type: application/json
 ```
 
 ### Corpo da Requisição:
 ```json
 {
-  "name": "usuario",
-  "email": "usuario@example.com",
-  "password": "secretpassword",
-  "document": "12345678901",
-  "mobile": "12345678901",
-  "type": false,
-  "birthdate": "1990-01-01",
-  "bio": "Lorem ipsum dolor sit amet.",
-  "createdAt": "2023-10-09T12:34:56Z",
-  "updatedAt": "2023-10-09T12:34:56Z",
-  "deletedAt": null,
-  "address": {
-    "zip": "12345678",
-    "street": "123 Main St",
-    "city": "Exampleville",
-    "state": "CA",
-    "number": "123",
-    "complement": "Apt 456"
-  }
+	"brand": "Toyota",
+	"car": "Camry",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15000,
+	"color": "blue",
+	"fipe": 25000,
+	"price": 28000,
+	"description": "Used car in excellent condition.",
+	"images": [
+		{
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		}
+	]
 }
 ```
 ### Exemplo de Response:
@@ -408,108 +405,51 @@ Content-type: application/json
 
 ```json
 {
-    "id": 1,
-  "name": "usuario",
-  "email": "usuario@example.com",
-  "document": "12345678901",
-  "mobile": "12345678901",
-  "type": false,
-  "birthdate": "1990-01-01",
-  "bio": "Lorem ipsum dolor sit amet.",
-  "createdAt": "2023-10-09T12:34:56Z",
-  "updatedAt": "2023-10-09T12:34:56Z",
-  "deletedAt": null,
-  "address": {
-    "id":1,
-    "zip": "12345678",
-    "street": "123 Main St",
-    "city": "Exampleville",
-    "state": "CA",
-    "number": "123",
-    "complement": "Apt 456"
-  }
+	"brand": "Toyota",
+	"car": "Camry",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15000,
+	"color": "blue",
+	"fipe": "25000.00",
+	"price": "28000.00",
+	"description": "Used car in excellent condition.",
+	"images": [
+		{
+			"id": 1,
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		}
+	],
+	"user": 1,
+	"deletedAt": null,
+	"id": 1,
+	"createdAt": "2023-10-17",
+	"updatedAt": "2023-10-17"
 }
 ```
 
 ### Possíveis Erros:
-| Código do Erro | Descrição                    |
-|----------------|------------------------------|
-| 409 Conflict   | Email already registered.    |
-| 409 Conflict   | Document already registered. |
-| 409 Conflict   | Mobile already registered.   |
+nenhum erro pode retornar além das validações.
 
 ---
 
-### 1.2. **Editar usuário**
+### 1.2. **Listar Anúncios**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/users/:userId`
+### `/anouncements`
 
 ### Exemplo de Request:
 ```
-PATCH /users/1
+GET /anouncements
 Host: http://localhost:3000/api
-Authorization: Bearer Token
+Authorization: None
 Content-type: application/json
 ```
 
 ### Parâmetros da Requisição:
-| Parâmetro   | Tipo        | Descrição                             |
-|-------------|-------------|---------------------------------------|
-| userId     | string      | Identificador único do usuário (User) |
-
-### Corpo da Requisição:
-```json
-{
-  "name": "usuarioeditado",
-  "email": "usuarioeditado@example.com",
-  "password": "secretpassword"
-}
-```
-
-### Exemplo de Response:
-```
-200 OK
-```
-```json
-{
-    "id": 1,
-  "name": "usuarioeditado",
-  "email": "usuarioeditado@example.com",
-  "password": "secretpassword"
-}
-```
-
-### Possíveis Erros:
-| Código do Erro   | Descrição                    |
-|------------------|------------------------------|
-| 401 Unauthorized | Missing bearer token.        |
-| 404 Not found    | User not found.              |
-| 409 Conflict     | Email already registered.    |
-| 409 Conflict     | Document already registered. |
-| 409 Conflict     | Mobile already registered.   |
-
----
-
-### 1.3. **Excluir usuário**
-
-[ Voltar aos Endpoints ](#5-endpoints)
-
-### `/users/:userId`
-
-### Exemplo de Request:
-```
-GET /users/1
-Host: http://localhost:3000/api
-Authorization: Bearer Token
-Content-type: application/json
-```
-
-### Parâmetros da Requisição:
-| Parâmetro   | Tipo        | Descrição                             |
-|-------------|-------------|---------------------------------------|
-| userId      | number      | Identificador único do usuário (User) |
+Nenhum
 
 ### Corpo da Requisição:
 ```json
@@ -518,11 +458,111 @@ Vazio
 
 ### Exemplo de Response:
 ```
-204 NO CONTENT
+200 OK
+```
+```json
+[
+	{
+		"id": 1,
+		"brand": "Toyota",
+		"car": "Camry",
+		"year": 2020,
+		"fuel": "gas",
+		"kilometers": 15000,
+		"color": "blue",
+		"fipe": "25000.00",
+		"price": "28000.00",
+		"description": "Used car in excellent condition.",
+		"createdAt": "2023-10-16",
+		"updatedAt": "2023-10-16",
+		"deletedAt": null,
+		"user": {
+			"id": 1,
+			"name": "John Doe",
+			"email": "johns@example.com",
+			"document": "2234567890",
+			"mobile": "22123456789",
+			"birthdate": "1990-01-01",
+			"bio": "Lorem ipsum dolor sit amet.",
+			"type": true,
+			"createdAt": "2023-10-09",
+			"updatedAt": "2023-10-09",
+			"deletedAt": null
+		},
+		"images": [
+			{
+				"id": 1,
+				"image_url": "http://example.com/image1.jpg",
+				"is_cover": true
+			}
+		]
+	}
+]
 ```
 
+### Possíveis Erros:
+no máximo retorna uma lista vazia
+
+---
+
+### 1.3. **lista anúncio por id**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncement/:anouncementId`
+
+### Exemplo de Request:
+```
+GET /anouncement/1
+Host: http://localhost:3000/api
+Authorization: None
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+Nenhum
+
+### Corpo da Requisição:
+```json
+Vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+{
+	"id": 4,
+	"brand": "Toyota",
+	"car": "Camry",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15000,
+	"color": "blue",
+	"fipe": "25000.00",
+	"price": "28000.00",
+	"description": "Used car in excellent condition.",
+	"createdAt": "2023-10-16",
+	"updatedAt": "2023-10-16",
+	"deletedAt": null,
+	"user": {
+		"id": 2,
+		"name": "John Doe",
+		"email": "johns@example.com",
+		"password": "$2a$10$sOUOtCyjEfeiqZq8Cd1Lnu8K.5oyRx7FsDLW0OAoR3.k0kVel7MmO",
+		"document": "2234567890",
+		"mobile": "22123456789",
+		"birthdate": "1990-01-01",
+		"bio": "Lorem ipsum dolor sit amet.",
+		"type": true,
+		"createdAt": "2023-10-09",
+		"updatedAt": "2023-10-09",
+		"deletedAt": null
+	},
+	"images": []
+}
+```
 
 ### Possíveis Erros:
-| Código do Erro | Descrição |
-|----------------|-----------|
-| 404 Not Found   | User not found. |
+no máximo retorna uma lista vazia

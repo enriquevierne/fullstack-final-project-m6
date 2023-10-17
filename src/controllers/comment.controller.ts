@@ -17,7 +17,7 @@ const read = async (req: Request, res: Response): Promise<Response> => {
 
   const comment = await commentService.read(Number(anouncementId));
 
-  return res.status(201).json(comment);
+  return res.status(200).json(comment);
 };
 
 const update = async (req: Request, res: Response): Promise<Response> => {
