@@ -324,6 +324,47 @@ Vazio
 | 404 Not Found   | User not found. |
 
 
+### 1.4. **Fazer Login**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/login`
+
+### Exemplo de Request:
+```
+POST /login
+Host: http://localhost:3000/api
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+```json
+{  
+  "email": "usuario@example.com",
+  "password": "secretpassword"
+}
+```
+### Exemplo de Response:
+```
+200 OK
+```
+
+```json
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjp0cnVlLCJpYXQiOjE2OTc1NTEyNjUsImV4cCI6MTY5ODE1NjA2NSwic3ViIjoiOCJ9.5sCeoDoQS3ANBi2kzw1eZEBIeZ9bTYnvCN5QreY8jNA"
+}
+```
+
+### Possíveis Erros:
+| Código do Erro   | Descrição                    |
+|------------------|------------------------------|
+| 401 Unauthorized | Invalid credentials.         |
+
+
+---
+
+
 ## 2. **Anouncements**
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -341,8 +382,8 @@ O objeto Anouncement é definido como:
 | fipe        | number | O preço da fipe do carro                         |
 | price       | number | O preço de venda do carro                        |
 | description | string | A descrição do anunncio                          |
-| createdAt   | string | Data de atualização do carro                     |
-| updatedAt   | string | Data de deleção do carro                         |
+| createdAt   | string | Data de criação do carro                     |
+| updatedAt   | string | Data de atualização do carro                         |
 | deletedAt   | string | Data de deleção do carro                         |
 | images      | array | As imagens do carro.                             |
 
@@ -509,7 +550,7 @@ no máximo retorna uma lista vazia
 
 ---
 
-### 2.3. **lista anúncio por id**
+### 2.3. **listar anúncio por id**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -575,7 +616,7 @@ Vazio
 
 
 
-### 2.4. **lista anúncios de um usuário**
+### 2.4. **listar anúncios de um usuário**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -656,7 +697,97 @@ Vazio
 
 ### Exemplo de Request:
 ```
-GET /anouncement/1
+PATCH /anouncement/1
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| anouncementId | number      | Identificador único do anúncio |
+
+### Corpo da Requisição:
+```json
+{
+	"brand": "editado",
+	"car": "Camaary",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15900,
+	"color": "blue",
+	"fipe": 25000,
+	"price": 28000,
+	"description": "Used car in excellent condition.",
+	"images": [
+		{
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		},
+			{
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		},	{
+			"image_url": "http://example.com/image1.jpg"
+			
+		}
+	]
+}
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+{
+	"id": 11,
+	"brand": "editado",
+	"car": "Camaary",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15900,
+	"color": "blue",
+	"fipe": 25000,
+	"price": 28000,
+	"description": "Used car in excellent condition.",
+	"createdAt": "2023-10-17",
+	"updatedAt": "2023-10-17",
+	"deletedAt": null,
+	"images": [
+		{
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		},
+		{
+			"image_url": "http://example.com/image1.jpg",
+			"is_cover": true
+		},
+		{
+			"image_url": "http://example.com/image1.jpg"
+		}
+	]
+}
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição |
+|-----------------|-----------|
+| 401 Unautihorized   | Missing Bearer Token. |
+| 403 Forbidden   | Insufficient permission. |
+| 404 Not Found   | Anouncement not found. |
+
+
+### 2.6. **excluir anúncio**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncement/:anouncementId`
+
+### Exemplo de Request:
+```
+DELETE /anouncement/1
 Host: http://localhost:3000/api
 Authorization: Bearer Token
 Content-type: application/json
@@ -674,50 +805,251 @@ Vazio
 
 ### Exemplo de Response:
 ```
-200 OK
+204 NO CONTENT
 ```
+
+### Possíveis Erros:
+| Código do Erro    | Descrição |
+|-------------------|-----------|
+| 401 Unauthorized | Missing Bearer Token. |
+| 403 Forbidden     | Insufficient permission. |
+| 404 Not Found     | Anouncement not found. |
+
+
+## 3. **Comments**
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto User é definido como:
+
+| Campo         | Tipo   | Descrição                         |
+| --------------|--------|-----------------------------------|
+| id            | number | Identificador único do comentário |
+| comment_text  | string | O nome do usuário                 |
+| createdAt     | string | Data de criação do comentário |
+| updatedAt     | string | Data de atualização do comentário     |
+| deletedAt     | string | Data de deleção do comentário     |
+| userId        | number | Identificador único do usuário    |
+| anouncementId | number | Identificador único do anúncio    |
+
+    
+### Endpoints
+
+| Método   | Rota                                             | Descrição                                 |
+|----------|----------------|-----------------------------------------------------------------------------|
+| POST     | /anouncements/:anouncementId/comments            | Criação de um comentário                  |
+| GET      | /anouncements/:anouncementId/comments            | listar todos os comentários de um anúncio |
+| PATCH    | /anouncements/:anouncementId/comments/:commentId | Edição de um comentário                   |
+| DELETE   | /anouncements/:anouncementId/comments/:commentId | Deleção de um comentário                  |
+
+---
+
+### 3.1. **Criação de comentário**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/anouncements/:anouncementId/comments`
+
+### Exemplo de Request:
+```
+POST /anouncements/1/comments 
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| anouncementId | number      | Identificador único do anuncio |
+
+### Corpo da Requisição:
 ```json
 {
-	"id": 1,
-	"name": "John Doe",
-	"email": "johns@example.com",
-	"password": "$2a$10$sOUOtCyjEfeiqZq8Cd1Lnu8K.5oyRx7FsDLW0OAoR3.k0kVel7MmO",
-	"document": "2234567890",
-	"mobile": "22123456789",
-	"birthdate": "1990-01-01",
-	"bio": "Lorem ipsum dolor sit amet.",
-	"type": true,
-	"createdAt": "2023-10-09",
-	"updatedAt": "2023-10-09",
+	"comment_text": "Um comentário"
+}
+```
+### Exemplo de Response:
+```
+201 Created
+```
+
+```json
+{
+	"comment_text": "Um comentário",
+	"user": 6,
+	"anouncement": 1,
 	"deletedAt": null,
-	"anouncements": [
-		{
-			"id": 1,
-			"brand": "Toyota",
-			"car": "Camry",
-			"year": 2020,
-			"fuel": "gas",
-			"kilometers": 15000,
-			"color": "blue",
-			"fipe": "25000.00",
-			"price": "28000.00",
-			"description": "Used car in excellent condition.",
-			"createdAt": "2023-10-16",
-			"updatedAt": "2023-10-16",
-			"deletedAt": null,
-			"images": [
-				{
-					"id": 1,
-					"image_url": "http://example.com/image1.jpg",
-					"is_cover": true
-				}
-			]
-		}
-    ]
+	"id": 1,
+	"createdAt": "2023-10-17",
+	"updatedAt": "2023-10-17"
 }
 ```
 
 ### Possíveis Erros:
-| Código do Erro  | Descrição |
-|-----------------|-----------|
-| 404 Not Found   | User not found. |
+| Código do Erro   | Descrição               |
+|------------------|-------------------------|
+| 401 Unauthorized | Missing Bearer Token.   |
+| 404 Not found    | Anouncement not found.  |
+
+
+---
+
+### 3.2. **Listar comentários de um anúncio**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncements/:anouncementId/comments`
+
+### Exemplo de Request:
+```
+GET `/anouncements/1/comments`
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| anouncementId | string      | Identificador único do anuncio |
+
+### Corpo da Requisição:
+```json
+vazio
+```
+
+### Exemplo de Response:
+```
+200 OK
+```
+```json
+{
+	"id": 4,
+	"brand": "Toyota",
+	"car": "Camry",
+	"year": 2020,
+	"fuel": "gas",
+	"kilometers": 15000,
+	"color": "blue",
+	"fipe": "25000.00",
+	"price": "28000.00",
+	"description": "Used car in excellent condition.",
+	"createdAt": "2023-10-16",
+	"updatedAt": "2023-10-16",
+	"deletedAt": null,
+	"comments": [
+		{
+			"id": 1,
+			"comment_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut urna ac est pulvinar pharetra. Quisque euismod turpis nec magna consequat, a volutpat sem laoreet. Vestibulum in mi id urna consequat bibendum. Aliquam ullamcorper urna non nisi malesuada, eu tincidunt tortor consequat. Maecenas nec efficitur turpis. Nunc interdum eros vitae vestibulum vulputate. Duis eget lacinia odio. Sed suscipit, elit non bibendum ultricies, sapien metus semper",
+			"createdAt": "2023-10-17",
+			"updatedAt": "2023-10-17",
+			"deletedAt": null
+		},
+		{
+			"id": 2,
+			"comment_text": "Um comentário",
+			"createdAt": "2023-10-17",
+			"updatedAt": "2023-10-17",
+			"deletedAt": null
+		}
+	]
+}
+```
+
+### Possíveis Erros:
+| Código do Erro   | Descrição                    |
+|------------------|------------------------------|
+| 401 Unauthorized | Missing bearer token.        |
+| 404 Not found    | Anouncement not found.       |
+
+---
+
+### 1.3. **Excluir usuário**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/anouncements/:anouncementId/comments/:commentId`
+
+### Exemplo de Request:
+```
+PATCH /anouncements/1/comments/1
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                         |
+|---------------|-------------|-----------------------------------|
+| anouncementId | number      | Identificador único do anuncio    |
+| commentId     | number      | Identificador único do comentario |
+
+### Corpo da Requisição:
+```json
+{
+	"comment_text": "comentario editado"
+}
+```
+
+### Exemplo de Response:
+```
+204 NO CONTENT
+```
+```json
+{
+	"id": 1,
+	"comment_text": "comentario editado",
+	"createdAt": "2023-10-17",
+	"updatedAt": "2023-10-17",
+	"deletedAt": null
+}
+```
+
+### Possíveis Erros:
+| Código do Erro  | Descrição              |
+|-----------------|------------------------|
+| 404 Not Found   | Anouncement not found. |
+| 404 Not Found   | Comment not found. |
+
+
+### 1.4. **Excluir comentário**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/anouncements/:anouncementId/comments/:commentId`
+
+### Exemplo de Request:
+```
+DELETE /anouncements/1/comments/1
+Host: http://localhost:3000/api
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+| Parâmetro     | Tipo        | Descrição                         |
+|---------------|-------------|-----------------------------------|
+| anouncementId | number      | Identificador único do anuncio    |
+| commentId     | number      | Identificador único do comentario |
+
+### Corpo da Requisição:
+```json
+vazio
+```
+### Exemplo de Response:
+```
+204 NO CONTENT
+```
+
+### Possíveis Erros:
+| Código do Erro    | Descrição |
+|-------------------|-----------|
+| 401 Unauthorized | Missing Bearer Token. |
+| 403 Forbidden     | Insufficient permission. |
+| 404 Not Found     | Anouncement not found. |
+| 404 Not Found   | Anouncement not found. |
+| 404 Not Found   | Comment not found. |
+
+
+---
+

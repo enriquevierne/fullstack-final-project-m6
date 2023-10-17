@@ -11,6 +11,7 @@ const commentSchema = z.object({
   comment_text: z.string().max(255),
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date()),
+  deletedAt: z.string().or(z.date()),
   userId: userSchema,
   anouncementId: anouncementSchema,
 });
