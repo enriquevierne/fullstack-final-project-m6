@@ -1053,7 +1053,6 @@ vazio
 | 401 Unauthorized | Missing Bearer Token. |
 | 403 Forbidden     | Insufficient permission. |
 | 404 Not Found     | Anouncement not found. |
-| 404 Not Found   | Anouncement not found. |
 | 404 Not Found   | Comment not found. |
 
 
