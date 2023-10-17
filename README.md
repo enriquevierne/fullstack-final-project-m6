@@ -111,7 +111,7 @@ Todas as rotas são necessárias autenticação, exceto nas rotas de GET.
     - [POST - /anouncements/:anouncementId/comments](#31-criação-de-comentário)
     - [GET - /anouncements/:anouncementId/comments](#32-listar-comentários-de-um-anúncio)
     - [UPDATE - /anouncements/:anouncementId/comments/:commentId](#33-editar-comentário)
-	- [DELETE - /anouncements/:anouncementId/comments/:commentId](#34-excluir-usuário)
+	- [DELETE - /anouncements/:anouncementId/comments/:commentId](#34-excluir-comentário)
 
 ---
 
@@ -296,7 +296,7 @@ Content-type: application/json
 
 ### Exemplo de Request:
 ```
-GET /users/1
+DELETE /users/1
 Host: http://localhost:3000/api
 Authorization: Bearer Token
 Content-type: application/json
@@ -321,6 +321,8 @@ Vazio
 ### Possíveis Erros:
 | Código do Erro | Descrição |
 |----------------|-----------|
+| 401 Unauthorized | Missing Bearer Token. |
+| 403 Forbidden     | Insufficient permission. |
 | 404 Not Found   | User not found. |
 
 
@@ -565,7 +567,9 @@ Content-type: application/json
 ```
 
 ### Parâmetros da Requisição:
-Nenhum
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| anouncementId | number      | Identificador único do anuncio |
 
 ### Corpo da Requisição:
 ```json
@@ -631,7 +635,9 @@ Content-type: application/json
 ```
 
 ### Parâmetros da Requisição:
-Nenhum
+| Parâmetro     | Tipo        | Descrição                      |
+|---------------|-------------|--------------------------------|
+| userId | number      | Identificador único do usuário |
 
 ### Corpo da Requisição:
 ```json
@@ -964,7 +970,7 @@ vazio
 
 ---
 
-### 1.3. **Excluir usuário**
+### 3.3. **Editar comentário**
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
@@ -1012,7 +1018,7 @@ Content-type: application/json
 | 404 Not Found   | Comment not found. |
 
 
-### 1.4. **Excluir comentário**
+### 3.4. **Excluir comentário**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
