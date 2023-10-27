@@ -22,7 +22,14 @@ const create = async ({
     process.env.SECRET_KEY!,
     { subject: foundUser.id.toString(), expiresIn: process.env.EXPIRES_IN! }
   );
-  return { token };
+  const user = {
+    token: token,
+    user: foundUser.name,
+    type: foundUser.type,
+    id: foundUser.id,
+  };
+
+  return user;
 };
 
-export default {create}
+export default { create };
