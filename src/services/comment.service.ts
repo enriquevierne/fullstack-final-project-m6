@@ -6,7 +6,7 @@ const create = async (payload: any): Promise<any> => {
   const comment = await commentRepository.save(foundComment);
 
   return comment;
-};e .
+}
 
 const read = async (anouncementId: number): Promise<any> => {
   const comment = await anouncementRepository.findOne(
