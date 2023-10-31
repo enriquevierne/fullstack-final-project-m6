@@ -8,6 +8,7 @@
     - [Instalando Dependências](#31-instalando-dependências)
     - [Variáveis de Ambiente](#32-variáveis-de-ambiente)
     - [Migrations](#33-migrations)
+    - [Rodando o servidor](#34-rodando-o-servidor)
 - [Autenticação](#4-autenticação)
 - [Endpoints](#5-endpoints)
 
@@ -57,7 +58,7 @@ npm install
 ### 3.2. Variáveis de Ambiente
 
 Em seguida, crie um arquivo **.env**, copiando o formato do arquivo **.env.example**:
-```
+```shell
 cp .env.example .env
 ```
 
@@ -67,14 +68,28 @@ Configure suas variáveis de ambiente com suas credenciais do Postgres e uma nov
 
 Execute as migrations com o comando:
 
-```
+```shell
 npm run typeorm migration:generate ./src/migrations/InitialMigration -- -d ./src/data-source.ts
 ```
 e depois este comando:
 
-```
+```shell
 npm run typeorm migration:run -- -d ./src/data-source
 ```
+
+### 3.4. Rodando o servidor
+Execute as migrations com o comando:
+
+```shell
+npm run dev
+```
+resposta esperada:
+````shell
+query: SELECT * FROM current_schema()
+query: SELECT version();
+Server is running  
+Servidor executando
+````
 
 ---
 ## 4. Autenticação
